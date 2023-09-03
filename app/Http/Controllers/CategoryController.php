@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductCollection;
-use App\Models\Product;
-use Auth;
+use App\Http\Resources\CategoryCollection;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
   public function __construct()
   {
@@ -18,8 +17,8 @@ class ProductController extends Controller
 
   public function index()
   {
-    $products = Product::paginate(10);
-    return new ProductCollection($products);
+    $categories = Category::paginate(10);
+    return new CategoryCollection($categories);
   }
 
   public function show()

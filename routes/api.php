@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 
 /*
@@ -27,5 +28,6 @@ Route::post('/register', [AuthController::class, 'register']);
 //protected
 Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::post('/logout', [AuthController::class, 'logout']);
-  Route::apiResource('/product', ProductController::class)->middleware('ability:admin');
+  Route::apiResource('/products', ProductController::class);
+  Route::apiResource('/categories', CategoryController::class);
 });
