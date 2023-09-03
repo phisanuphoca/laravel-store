@@ -16,35 +16,6 @@
         </style>
     </head>
     <body class="antialiased">
-      <script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId      : '847473656893697',
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v17.0'
-          });
-            
-          FB.AppEvents.logPageView();   
-            
-        };
-      
-        (function(d, s, id){
-           var js, fjs = d.getElementsByTagName(s)[0];
-           if (d.getElementById(id)) {return;}
-           js = d.createElement(s); js.id = id;
-           js.src = "https://connect.facebook.net/en_US/sdk.js";
-           fjs.parentNode.insertBefore(js, fjs);
-         }(document, 'script', 'facebook-jssdk'));
-
-         function checkLoginState(){
-          console.log("================================")
-          FB.getLoginStatus(function(response) {
-              //statusChangeCallback(response);
-              console.log(response,"response")
-          });
-         }
-      </script>
 
         <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
             @if (Route::has('login'))
@@ -72,10 +43,6 @@
                     <i class="fab fa-facebook-f fa-fw"></i>
                     Login with Facebook
                  </a>
-                 <fb:login-button 
-                  scope="public_profile,email"
-                  onlogin="checkLoginState();">
-                </fb:login-button>
               </div>
             
                 <div class="mt-16">
