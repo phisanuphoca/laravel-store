@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
+use App\Events\OrderCreated;
 use Illuminate\Http\Request;
+use App\Mail\NewOrderSendMail;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\CreateOrderRequest;
-use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -19,7 +23,7 @@ class OrderController extends Controller
   {
 
     DB::beginTransaction();
-    $user = Auth::user();
+    $customer = Auth::user();
     $products = $orderData->products;
     $order = null;
     try {
@@ -38,7 +42,7 @@ class OrderController extends Controller
           ];
       }
       $orderData['summary_price'] = $sum;
-      $orderData['user_id'] = $user->id;
+      $orderData['user_id'] = $customer->id;
       //return $productAttach;
       $order = Order::create($orderData->only(
         'name',
@@ -54,6 +58,14 @@ class OrderController extends Controller
       $order->products()->attach($productAttach);
       DB::commit();
 
+      //$admin = User::where('email', $request->email)->first();
+      $admin = User::whereHas(
+        'roles',
+        function ($q) {
+          $q->where('slug', 'admin');
+        }
+      )->first();
+      OrderCreated::dispatch($admin, $customer);
       return  $order;
     } catch (\Exception $e) {
 
@@ -80,12 +92,25 @@ class OrderController extends Controller
       return response()->json([
         'success' => false,
         'error' => "can't access this data"
-      ]);
+      ], 403);
     }
     return response()->json([
       'success' => true,
       'order' => new OrderResource($order),
       'owner' => $owner
     ]);
+  }
+
+  public function update(Order $order)
+  {
+
+
+    $mailData = [
+      'title' => 'There is a new order',
+      'body' => 'Please check the order from the customer.'
+    ];
+
+    Mail::to('phisanuphoca@gmail.com')->send(new NewOrderSendMail($mailData));
+    dd('Success! Email has been sent successfully.');
   }
 }

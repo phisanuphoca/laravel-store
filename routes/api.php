@@ -22,18 +22,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-//public
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('social/login', [AuthController::class, 'socialLogin']);
+Route::group(['middleware' => 'logger'], function () {
+  //public
+  Route::post('/login', [AuthController::class, 'login']);
+  Route::post('/register', [AuthController::class, 'register']);
+  Route::post('social/login', [AuthController::class, 'socialLogin']);
 
-//protected
-Route::group(['middleware' => ['auth:sanctum']], function () {
-  Route::post('/logout', [AuthController::class, 'logout']);
-  Route::apiResource('/admin/products', ProductController::class);
-  Route::apiResource('/categories', CategoryController::class);
+  //protected
+  Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('/admin/products', ProductController::class);
+    Route::apiResource('/categories', CategoryController::class);
 
-  Route::apiResource('/orders', OrderController::class);
+    Route::apiResource('/orders', OrderController::class);
+  });
+
+  Route::get('/products', [ProductController::class, "list"]);
 });
-
-Route::get('/products', [ProductController::class, "list"]);
