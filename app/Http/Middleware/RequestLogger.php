@@ -25,10 +25,8 @@ class RequestLogger
       'REQUEST_BODY' => $request->all(),
       'RESPONSE' => $response->getContent()
     ];
-    $output = new \Symfony\Component\Console\Output\ConsoleOutput();
 
     Log::info(json_encode($log));
-    Log::info("================================================");
 
     return $response;
     //}
