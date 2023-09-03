@@ -18,6 +18,7 @@ return new class extends Migration
       $table->string('address');
       $table->string('billing_address');
       $table->decimal('summary_price');
+      $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
       $table->timestamps();
     });
   }

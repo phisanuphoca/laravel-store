@@ -16,10 +16,16 @@ class Order extends Model
     'address',
     'billing_address',
     'summary_price',
+    'category_id'
   ];
 
   public function products()
   {
     return $this->belongsToMany(Product::class, 'product_orders')->withPivot('summary_price', 'quantity');
+  }
+
+  public function user()
+  {
+    return $this->belongsTo(Users::class);
   }
 }

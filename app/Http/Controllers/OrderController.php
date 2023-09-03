@@ -6,10 +6,12 @@ use Exception;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\CreateOrderRequest;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -17,7 +19,7 @@ class OrderController extends Controller
   {
 
     DB::beginTransaction();
-
+    $user = Auth::user();
     $products = $orderData->products;
     $order = null;
     try {
@@ -48,7 +50,7 @@ class OrderController extends Controller
 
 
       $order->products()->attach($productAttach);
-
+      $user->orders()->attach($order);
       DB::commit();
 
       return  $order;
@@ -71,6 +73,7 @@ class OrderController extends Controller
   public function show(Order $order)
   {
     $order->products;
+    return $order;
     return response()->json([
       'success' => true,
       'order' => new OrderResource($order)
