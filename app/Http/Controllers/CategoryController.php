@@ -21,23 +21,35 @@ class CategoryController extends Controller
     return new CategoryCollection($categories);
   }
 
-  public function show()
+  public function show(Category $category)
   {
-    return "show";
+    return response()->json([
+      'success' => true,
+      'data' => $category
+    ]);
   }
 
   public function store()
   {
-    return "store";
+    return response()->json([
+      'success' => true,
+      'message' => "Your can access this function. This function is waiting to be implementation"
+    ]);
   }
 
   public function update()
   {
-    return "update";
+    return response()->json([
+      'success' => true,
+      'message' => "Your can access this function. This function is waiting to be implementation"
+    ]);
   }
 
   public function destroy()
   {
-    return "destroy";
+    return response()->json([
+      'success' => true,
+      'message' => "Your can access this function. This function is waiting to be implementation"
+    ]);
   }
 }

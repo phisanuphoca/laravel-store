@@ -31,7 +31,7 @@ Route::group(['middleware' => 'logger'], function () {
   //protected
   Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('/admin/products', ProductController::class);
+    Route::apiResource('/cms/products', ProductController::class);
     Route::apiResource('/categories', CategoryController::class);
 
     Route::apiResource('/orders', OrderController::class);

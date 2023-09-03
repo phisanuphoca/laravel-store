@@ -24,30 +24,37 @@ class ProductController extends Controller
     return new ProductCollection($products);
   }
 
-  public function show()
+  public function show(Product $product)
   {
-    return "show";
+    $product->category;
+    return response()->json([
+      'success' => true,
+      'data' => $product
+    ]);
   }
 
   public function store()
   {
-    return "store";
+    return response()->json([
+      'success' => true,
+      'message' => "Your can access this function. This function is waiting to be implementation"
+    ]);
   }
 
   public function update()
   {
-    $product = Product::find(1);
-    $product->name = request()->input('name');;
-    $product->update();
-    //if (!$user->roles()->find($data['role_id'])) {
-    //  $user->roles()->attach($role);
-    //}
-    return  $product;
+    return response()->json([
+      'success' => true,
+      'message' => "Your can access this function. This function is waiting to be implementation"
+    ]);
   }
 
   public function destroy()
   {
-    return "destroy";
+    return response()->json([
+      'success' => true,
+      'message' => "Your can access this function. This function is waiting to be implementation"
+    ]);
   }
 
   public function list()
