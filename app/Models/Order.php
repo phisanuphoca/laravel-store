@@ -16,7 +16,7 @@ class Order extends Model
     'address',
     'billing_address',
     'summary_price',
-    'category_id'
+    'user_id',
   ];
 
   public function products()
@@ -26,6 +26,6 @@ class Order extends Model
 
   public function user()
   {
-    return $this->belongsTo(Users::class);
+    return $this->belongsTo(User::class);
   }
 }

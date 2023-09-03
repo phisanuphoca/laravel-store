@@ -38,6 +38,7 @@ class OrderController extends Controller
           ];
       }
       $orderData['summary_price'] = $sum;
+      $orderData['user_id'] = $user->id;
       //return $productAttach;
       $order = Order::create($orderData->only(
         'name',
@@ -46,11 +47,11 @@ class OrderController extends Controller
         'address',
         'billing_address',
         'summary_price',
+        'user_id'
       ));
 
 
       $order->products()->attach($productAttach);
-      $user->orders()->attach($order);
       DB::commit();
 
       return  $order;
@@ -72,11 +73,19 @@ class OrderController extends Controller
 
   public function show(Order $order)
   {
+
     $order->products;
-    return $order;
+    $owner = $order->user()->select('id', 'name', 'email')->first();
+    if ($owner->id != Auth::user()->id) {
+      return response()->json([
+        'success' => false,
+        'error' => "can't access this data"
+      ]);
+    }
     return response()->json([
       'success' => true,
-      'order' => new OrderResource($order)
+      'order' => new OrderResource($order),
+      'owner' => $owner
     ]);
   }
 }
