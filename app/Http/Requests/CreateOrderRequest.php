@@ -25,6 +25,7 @@ class CreateOrderRequest extends FormRequest
     return [
       'name' => ['required', 'string', 'max:255'],
       'email' => ['required', 'string', 'email', 'max:255'],
+      'phone' => ['required', 'string', 'max:10'],
       'address' => ['required', 'string', 'max:255'],
       'billing_address' => ['required', 'string', 'max:255'],
       'products' => ['required', 'array'],
