@@ -16,7 +16,9 @@ class ProductCollection extends ResourceCollection
   {
     //return parent::toArray($request);
     return [
-      'data' => $this->collection,
+      'data' => $this->collection->map(function ($each) {
+        return $each->only('name', 'slug', 'short_description', 'price', 'is_in_stock', 'image', 'category', 'created_at');
+      }),
     ];
   }
 }
