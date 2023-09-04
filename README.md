@@ -1,4 +1,4 @@
-## API implemented with Laravel 10
+## API Backend implemented with Laravel 10
 
 This project is a test of using Laravel to create a backend API for managing product orders. It involves data management, access control, and utilizing various Laravel features. There is no frontend in this project.
 
@@ -8,7 +8,7 @@ The features used in this project include:
 -   API Resources
 -   Middleware
 -   Laravel Sanctum of authentication and authorization
--   Laravel Socialite
+-   Laravel Socialite : facebook, google verify access token
 -   Cache: Redis
 -   Events & Listeners
 -   Queue
